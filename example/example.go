@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/bigpyer/ymtlog"
 	"time"
-	"ymtlog"
 )
 
 func main() {
