@@ -29,8 +29,6 @@ const (
 	ERROR
 )
 
-var _log *logger = dailyLogger("../log", "winterfell.log")
-
 type logger struct {
 	mu       *sync.RWMutex
 	fileDir  string
@@ -46,7 +44,8 @@ type logger struct {
 	logLevel LEVEL
 }
 
-func dailyLogger(dir string, name string) *logger {
+// logger handler constructor
+func NewLogger(dir string, name string) *logger {
 	dailyLogger := &logger{
 		mu:       new(sync.RWMutex),
 		fileDir:  dir,
@@ -171,58 +170,6 @@ func (f *logger) outPut(str string) {
 	f.lger.Output(2, str)
 }
 
-//info log
-func Info(format string, v ...interface{}) {
-	_log.Info(format, v)
-}
-
-// internal info log
-func (f *logger) Info(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
-	if f.logLevel <= INFO {
-		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[INFO] "+format, v...)
-	}
-}
-
-// debug log
-func Debug(format string, v ...interface{}) {
-	_log.Debug(format, v)
-}
-
-// internal debug log
-func (f *logger) Debug(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
-	if f.logLevel <= DEBUG {
-		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[DEBUG] "+format, v...)
-	}
-}
-
-// warn log
-func Warn(format string, v ...interface{}) {
-	_log.Warn(format, v)
-}
-
-// internal warn log
-func (f *logger) Warn(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
-	if f.logLevel <= WARN {
-		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[WARN] "+format, v...)
-	}
-}
-
-// error log
-func Error(format string, v ...interface{}) {
-	_log.Error(format, v)
-}
-
-// internal error log
-func (f *logger) Error(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
-	if f.logLevel <= ERROR {
-		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[ERROR] "+format, v...)
-	}
-}
-
 func isExist(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
@@ -234,4 +181,36 @@ func joinFilePath(path, file string) string {
 
 func shortFileName(file string) string {
 	return filepath.Base(file)
+}
+
+// info log
+func (f *logger) Info(format string, v ...interface{}) {
+	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	if f.logLevel <= INFO {
+		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[INFO] "+format, v...)
+	}
+}
+
+// debug log
+func (f *logger) Debug(format string, v ...interface{}) {
+	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	if f.logLevel <= DEBUG {
+		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[DEBUG] "+format, v...)
+	}
+}
+
+// warn log
+func (f *logger) Warn(format string, v ...interface{}) {
+	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	if f.logLevel <= WARN {
+		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[WARN] "+format, v...)
+	}
+}
+
+// error log
+func (f *logger) Error(format string, v ...interface{}) {
+	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	if f.logLevel <= ERROR {
+		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[ERROR] "+format, v...)
+	}
 }
