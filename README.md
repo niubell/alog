@@ -11,4 +11,4 @@ ymtlog是个人基于[Go](http://golang.org/)开发的异步日志组件，实�
 
 # Installation
 
-    go get bigpyer/ymtlog
+    go get github.com/bigpyer/ymtlog
