@@ -2,18 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/bigpyer/ymtlog"
 	"time"
+	"ymtlog"
 )
 
+var logger = ymtlog.NewLogger("./", "example.log")
+
 func main() {
+	logger.SetLogLevel(ymtlog.INFO)
 	fmt.Println("example start...")
 	for {
 		fmt.Println(" ----------batch start----------")
-		ymtlog.Info("%v\n", "info...")
-		ymtlog.Debug("%v\n", "debug...")
-		ymtlog.Warn("%v\n", "warn...")
-		ymtlog.Error("%v\n", "error...")
+		logger.Info("%v\n", "info...")
+		logger.Debug("%v\n", "debug...")
+		logger.Warn("%v\n", "warn...")
+		logger.Error("%v\n", "error...")
 		time.Sleep(10 * time.Second)
 		fmt.Println(" ----------batch end----------")
 	}

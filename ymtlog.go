@@ -17,7 +17,7 @@ import (
 const (
 	DATEFORMAT        = "2006-01-02"
 	DEFAULT_LOG_SCAN  = 300
-	DEFAULT_LOG_LEVEL = INFO
+	DEFAULT_LOG_LEVEL = ERROR
 )
 
 type LEVEL byte
@@ -57,6 +57,15 @@ func NewLogger(dir string, name string) *logger {
 	dailyLogger.initDailyLogger()
 
 	return dailyLogger
+}
+
+/*
+* @param level(0,1,2,3)
+* @desc  if output level is larger than log level,
+*       the content will be outputed
+ */
+func (f *logger) SetLogLevel(level LEVEL) {
+	f.logLevel = level
 }
 
 func (f *logger) initDailyLogger() {

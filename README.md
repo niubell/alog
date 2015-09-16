@@ -12,3 +12,7 @@ ymtlog是个人基于[Go](http://golang.org/)开发的异步日志组件，实�
 # Installation
 
     go get github.com/bigpyer/ymtlog
+# Test
+    cd src/example
+    go run example.go
+    tail -f example.log 观察日志打印情况
