@@ -194,7 +194,7 @@ func shortFileName(file string) string {
 
 // info log
 func (f *logger) Info(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	_, file, line, _ := runtime.Caller(1) //calldepth=1
 	if f.logLevel <= INFO {
 		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[INFO] "+format, v...)
 	}
@@ -202,7 +202,7 @@ func (f *logger) Info(format string, v ...interface{}) {
 
 // debug log
 func (f *logger) Debug(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	_, file, line, _ := runtime.Caller(1) //calldepth=1
 	if f.logLevel <= DEBUG {
 		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[DEBUG] "+format, v...)
 	}
@@ -210,7 +210,7 @@ func (f *logger) Debug(format string, v ...interface{}) {
 
 // warn log
 func (f *logger) Warn(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	_, file, line, _ := runtime.Caller(1) //calldepth=1
 	if f.logLevel <= WARN {
 		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[WARN] "+format, v...)
 	}
@@ -218,7 +218,7 @@ func (f *logger) Warn(format string, v ...interface{}) {
 
 // error log
 func (f *logger) Error(format string, v ...interface{}) {
-	_, file, line, _ := runtime.Caller(2) //calldepth=3
+	_, file, line, _ := runtime.Caller(1) //calldepth=1
 	if f.logLevel <= ERROR {
 		f.logChan <- fmt.Sprintf("[%v:%v]", shortFileName(file), line) + fmt.Sprintf("[ERROR] "+format, v...)
 	}
