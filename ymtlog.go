@@ -81,7 +81,7 @@ func (f *logger) isNeedRotate() bool {
 	if t.After(*f.date) {
 		return true
 	}
-	return true
+	return false
 }
 
 func (f *logger) rotate() {
