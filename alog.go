@@ -2,7 +2,7 @@
 @author: xuchengxuan(bigpyer@126.com)
 @brief: logger module
 */
-package ymtlog
+package alog
 
 import (
 	"fmt"
