@@ -73,6 +73,7 @@ func (f *logger) initDailyLogger() {
 	t, _ := time.Parse(DATEFORMAT, time.Now().Format(DATEFORMAT))
 
 	f.date = &t
+	f.fileName = f.fileName + "." + f.date.Format(DATEFORMAT)
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
@@ -92,25 +93,17 @@ func (f *logger) isNeedRotate() bool {
 	return false
 }
 
+// rotate file by date
 func (f *logger) rotate() {
+	t, _ := time.Parse(DATEFORMAT, time.Now().Format(DATEFORMAT))
+	f.date = &t
+
+	f.fileName = f.fileName + "." + f.date.Format(DATEFORMAT)
 	logFile := joinFilePath(f.fileDir, f.fileName)
-	logFileBak := logFile + "." + f.date.Format(DATEFORMAT)
 
-	if !isExist(logFileBak) && f.isNeedRotate() {
-		if f.logFile != nil {
-			f.logFile.Close()
-		}
-
-		err := os.Rename(logFile, logFileBak)
-		if err != nil {
-			f.lger.Printf("logger rename error: %v", err.Error())
-		}
-
-		t, _ := time.Parse(DATEFORMAT, time.Now().Format(DATEFORMAT))
-		f.date = &t
-		f.logFile, _ = os.Create(logFile)
-		f.lger = log.New(f.logFile, "", log.LstdFlags|log.Lmicroseconds)
-	}
+	f.logFile.Close()
+	f.logFile, _ = os.Create(logFile)
+	f.lger = log.New(f.logFile, "", log.LstdFlags|log.Lmicroseconds)
 }
 
 func (f *logger) monitorFile() {
@@ -177,11 +170,6 @@ func (f *logger) outPut(str string) {
 	defer f.mu.RUnlock()
 
 	f.lger.Output(2, str)
-}
-
-func isExist(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
 }
 
 func joinFilePath(path, file string) string {
