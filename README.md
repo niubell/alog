@@ -1,7 +1,7 @@
-ymtlog
+alog
 ===========
 # Overview 
-ymtlog是个人基于[Go](http://golang.org/)开发的异步日志组件，实现部分参照了[aiwuTech团队](https://github.com/aiwuTech)的repo，目前功能比较简单，后期会不断完善分支，欢迎大家贡献代码。
+alog是个人基于[Go](http://golang.org/)开发的异步日志组件，实现部分参照了[aiwuTech团队](https://github.com/aiwuTech)的repo，目前功能比较简单，后期会不断完善分支，欢迎大家贡献代码。
 
 # Features 
 ----------
@@ -11,7 +11,7 @@ ymtlog是个人基于[Go](http://golang.org/)开发的异步日志组件，实�
 
 # Installation
 
-    go get github.com/bigpyer/ymtlog
+    go get github.com/bigpyer/alog
 # Test
     cd src/example
     go run example.go

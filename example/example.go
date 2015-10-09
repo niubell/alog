@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/bigpyer/ymtlog"
+	"github.com/bigpyer/alog"
 	"time"
 )
 
-var logger = ymtlog.NewLogger("./", "example.log")
+var logger = alog.NewLogger("./", "example.log")
 
 func main() {
-	logger.SetLogLevel(ymtlog.INFO)
+	logger.SetLogLevel(alog.INFO)
 	fmt.Println("example start...")
 	for {
 		fmt.Println(" ----------batch start----------")
